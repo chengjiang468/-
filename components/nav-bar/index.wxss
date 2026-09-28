@@ -1,0 +1,89 @@
+.nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 50;
+  /* 底色由 index.js 的 bg 属性给（半透明白），这里补背景模糊 → 磨砂顶栏 */
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+}
+
+/* 设计稿：左右按钮圆心分别在 x=78 / x=672，按钮直径 72 → 左右内边距 42 */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 42rpx;
+}
+
+.nav-side {
+  width: 72rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: none;
+}
+
+/* 标题左对齐的页面（「我的」）：左边不留返回键，标题直接顶到 42rpx 处 */
+.nav-side.zero {
+  width: 0;
+  height: 0;
+}
+
+.nav-right {
+  justify-content: flex-end;
+}
+
+.nav-circle {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 左对齐标题的页面（如「我的」）不放返回键，用一块等宽占位保持标题左边距 */
+.nav-circle.ghost {
+  visibility: hidden;
+}
+
+.chev {
+  width: 15rpx;
+  height: 15rpx;
+  border-left: 4rpx solid #24312A;
+  border-bottom: 4rpx solid #24312A;
+  transform: rotate(45deg);
+  margin-left: -5rpx;
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #24312A;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nav-title.left {
+  text-align: left;
+  font-size: 38rpx;
+}
+
+.nav-line {
+  height: 2rpx;
+  margin: 0 40rpx;
+  background: #EDEADF;
+}
+
+.nav-ph {
+  width: 100%;
+}

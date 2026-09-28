@@ -1,0 +1,182 @@
+/* ============================================================================
+   我的旅程 —— 按设计稿《04-我的旅程》逐屏还原
+   设计稿 750×1624px，此屏 1px = 1rpx。括号里的数字即设计稿实测坐标。
+   ========================================================================== */
+
+.sub {
+  padding: 36rpx 40rpx 0;          /* 设计稿 (42,263)，导航栏下 44 */
+  font-size: 24rpx;
+  color: var(--t3);
+}
+
+/* ------------------------------------------------------------------ 徽章收集 */
+.bcard {
+  margin: 30rpx 40rpx 0;           /* 设计稿 (40,316,670,304) */
+  padding: 40rpx 28rpx 34rpx;
+}
+
+.bc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 33rpx;
+}
+
+.bc-t {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--t1);
+}
+
+.bc-r {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.bc-n {
+  font-size: 38rpx;
+  line-height: 1;
+  color: var(--brand-deep);
+}
+
+.bc-s {
+  font-size: 24rpx;
+  color: var(--t3);
+  line-height: 1;
+  margin-top: 8rpx;
+}
+
+/* 设计稿：4 枚 136×136 方块，间距 20；尺寸由 JS 按徽章数量算好写在行内样式里。
+   格子里只放「徽章本身」—— 不铺底色块、不放锁图标，保证这一块只有徽章。 */
+.bg {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20rpx;
+}
+
+.bi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.bi-medal {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-6deg);
+}
+
+/* 未解锁：只留一个淡淡的影子，不剧透图案 */
+.bi-medal.off {
+  transform: rotate(-6deg) scale(0.86);
+  opacity: 0.22;
+  filter: grayscale(1);
+}
+
+.bc-foot {
+  display: block;
+  margin-top: 26rpx;
+  font-size: 21rpx;
+  color: var(--t3);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ 三条线路 */
+.lcard {
+  margin: 8rpx 40rpx 0;            /* 设计稿：和上一张卡只隔 4~5px */
+  padding: 30rpx 28rpx 16rpx;
+}
+
+.lc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+}
+
+.lc-t {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--t1);
+}
+
+.lc-s {
+  font-size: 24rpx;
+  color: var(--t3);
+}
+
+/* 设计稿：图标 72×72，行高 116；文字列起点 x=205（图标右缘 143 → 间隔 62） */
+.lr {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+}
+
+.lr-ic {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.lr-col {
+  flex: 1;
+  min-width: 0;
+  margin-left: 62rpx;
+}
+
+.lr-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.lr-n {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--t1);
+}
+
+.lr-p {
+  font-size: 26rpx;
+  color: var(--t2);
+}
+
+.lr-bar {
+  margin-top: 20rpx;
+}
+
+/* ------------------------------------------------------------------ 线路图标
+   手绘拼贴插画（放电线＝风车 / 双飞线＝双蝶 / 同频线＝纸飞机），
+   透明底 PNG，压在路线主色的浅色方块上。 */
+.lr-ic-img {
+  width: 88%;
+  height: 88%;
+}
+
+/* 整条走完的小标 */
+.lr-full {
+  flex: none;
+  margin-left: 18rpx;
+  height: 40rpx;
+  padding: 0 16rpx;
+  border-radius: 999rpx;
+  font-size: 20rpx;
+  line-height: 40rpx;
+  color: var(--gold);
+  background: #FBF3E2;
+}
+
+/* ------------------------------------------------------------------ 重置 */
+.reset {
+  margin: 46rpx 0 0;
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--t3);
+  text-decoration: underline;
+}

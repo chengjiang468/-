@@ -1,0 +1,55 @@
+.tbar {
+  position: fixed;
+  left: 32rpx;
+  right: 32rpx;
+  z-index: 55;
+}
+
+.tbar-pill {
+  height: 124rpx;
+  /* 自定义 tabBar 是独立组件，用字面色值而不吃 --glass（不依赖变量继承） */
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.72);
+  border-radius: 72rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 12rpx;
+  box-shadow: 0 10rpx 34rpx rgba(36, 49, 42, 0.10);
+}
+
+.tab {
+  flex: 1;
+  height: 100rpx;
+  border-radius: 52rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3rpx solid transparent;
+}
+
+/* 第 9 轮修：内底原来还是旧橙 #FFE3CE（只有边框在上一轮换成了绿），
+   于是选中态是「绿框 + 橙底」—— 两色必须同一族才算「线框与内色统一」。 */
+.tab.on {
+  background: #E8F5ED;
+  border-color: #65B98A;
+}
+
+.tab-ic {
+  width: 36rpx;
+  height: 36rpx;
+  margin-bottom: 2rpx;
+}
+
+.tab-tx {
+  font-size: 20rpx;
+  line-height: 1;
+  color: #93A199;
+}
+
+.tab.on .tab-tx {
+  color: #3F9A66;
+  font-weight: 600;
+}

@@ -1,0 +1,117 @@
+<nav-bar title="活动详情" back="{{true}}" bordered="{{true}}">
+  <button slot="right" class="nav-btn" open-type="share" hover-class="btn-hover">
+    <view class="ic-share">
+      <view class="sh-rod"></view>
+      <view class="sh-head"></view>
+      <view class="sh-tray"></view>
+    </view>
+  </button>
+</nav-bar>
+
+<view class="screen">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+  <block wx:if="{{act}}">
+
+    <!-- 封面：手账纸底 + 和纸胶带 + 日期 / 价格贴纸 -->
+    <view class="hero card-paper">
+      <view class="washi washi-peach hw1"></view>
+      <view class="washi washi-sage hw2"></view>
+      <view class="himg-wrap">
+        <image class="himg" src="{{act.cover}}" mode="aspectFill" />
+        <view class="hday num">{{act.day}}</view>
+        <view class="hprice">{{act.price}}</view>
+      </view>
+    </view>
+
+    <!-- 标题 -->
+    <view class="head">
+      <text class="nm title-font">{{act.title}}</text>
+      <text class="sub">{{act.plain}}</text>
+    </view>
+
+    <!-- 时间 / 地点 / 备注 -->
+    <view class="card meta">
+      <view class="mrow">
+        <text class="mk">时间</text>
+        <text class="mv num">{{act.time}}</text>
+      </view>
+      <view class="hr"></view>
+      <view class="mrow">
+        <text class="mk">地点</text>
+        <text class="mv">{{act.place}}</text>
+      </view>
+      <view class="hr"></view>
+      <view class="mrow">
+        <text class="mk">备注</text>
+        <text class="mv">{{act.need}}</text>
+      </view>
+    </view>
+
+    <!-- 活动介绍 -->
+    <view class="card sec">
+      <view class="sec-hd">
+        <view class="hd-dot" style="background:{{color}}"></view>
+        <text class="sec-h">活动介绍</text>
+      </view>
+      <text class="para" wx:for="{{act.intro}}" wx:key="*this">{{item}}</text>
+    </view>
+
+    <!-- 小科普 -->
+    <view class="card sec">
+      <view class="sec-hd">
+        <view class="hd-dot" style="background:#3E8E9E"></view>
+        <text class="sec-h">小科普</text>
+        <text class="sec-tag">边走边看</text>
+      </view>
+      <view class="kn" wx:for="{{act.science}}" wx:key="t">
+        <text class="kn-t">{{item.t}}</text>
+        <text class="kn-d">{{item.d}}</text>
+      </view>
+    </view>
+
+    <!-- 温馨提示 -->
+    <view class="card card-sand sec">
+      <view class="sec-hd">
+        <view class="hd-dot" style="background:#C9922B"></view>
+        <text class="sec-h">温馨提示</text>
+      </view>
+      <view class="tp" wx:for="{{act.tips}}" wx:key="*this">
+        <view class="tp-i"></view>
+        <text class="tp-t">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 活动地点：想打卡的人从这里进点位页（这一页本身不是打卡界面）。
+         不在任何动线上的点位（卫生间 / 无花果生态园 / 碉楼酒店 / 野奢民宿）只能浏览，文案要跟着改。 -->
+    <view class="card sec" wx:if="{{spot}}">
+      <view class="sec-hd">
+        <view class="hd-dot" style="background:{{color}}"></view>
+        <text class="sec-h">活动地点</text>
+        <text class="sec-tag">{{onLine ? '点进去可打卡' : '点进去看看'}}</text>
+      </view>
+      <view class="pl" bindtap="onSpot" hover-class="btn-hover">
+        <view class="pl-ic">
+          <image class="pl-img" src="{{spot.icon}}" mode="aspectFit" />
+        </view>
+        <view class="pl-col">
+          <text class="pl-n">{{spot.name}}</text>
+          <text class="pl-d">{{spot.cat}}{{lineTxt}}</text>
+        </view>
+        <view class="ic-chev"></view>
+      </view>
+    </view>
+
+    <view class="tail">江门 · 百合镇蝴蝶谷 · 园区导览</view>
+  </block>
+</view>
+
+<!-- 底部：这场体验的预约开关 -->
+<view class="actionbar" wx:if="{{act}}">
+  <view class="ab-btn btn {{booked ? 'btn-ghost' : 'btn-primary'}}" bindtap="onBook" hover-class="btn-hover">
+    {{booked ? '已预约 · 取消' : '预约这场体验'}}
+  </view>
+</view>

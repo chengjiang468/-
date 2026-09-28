@@ -1,0 +1,61 @@
+<view class="screen">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+
+  <nav-bar title="预约体验" back="{{true}}">
+    <button slot="right" class="nav-btn" open-type="share" hover-class="btn-hover">
+      <view class="ic-share">
+        <view class="sh-rod"></view>
+        <view class="sh-head"></view>
+        <view class="sh-tray"></view>
+      </view>
+    </button>
+  </nav-bar>
+
+  <!-- 随机选路已挪到首页；这一页只做「看活动 + 预约」 -->
+  <view class="sec-head">
+    <text class="sec-title">本周可预约</text>
+    <text class="sec-more">共 {{count}} 项</text>
+  </view>
+
+  <!-- 整张卡可点，进活动详情；价格胶囊自己吃掉点击，只做预约开关 -->
+  <view class="alist">
+    <view class="acard card" wx:for="{{acts}}" wx:key="title"
+          data-idx="{{item.idx}}" bindtap="onAct" hover-class="btn-hover">
+      <view class="acover-wrap">
+        <image class="acover" src="{{item.cover}}" mode="aspectFill" />
+        <view class="adate"><text class="num">{{item.day}}</text></view>
+      </view>
+      <view class="abody">
+        <view class="atop">
+          <text class="atitle">{{item.title}}</text>
+          <view class="aprice {{item.booked ? 'on' : ''}}"
+                data-title="{{item.title}}" catchtap="onBook" hover-class="btn-hover">
+            {{item.booked ? '已约 ✓' : item.price}}
+          </view>
+        </view>
+        <view class="ameta">
+          <view class="ic-clock"></view>
+          <text class="ameta-t">{{item.time}} · {{item.place}}</text>
+        </view>
+        <view class="ahint">看活动介绍与小科普 ›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的旅程入口：深色卡 (40,1272,670,128) -->
+  <view class="entry" bindtap="onJourney" hover-class="btn-hover">
+    <view class="ec-ic">
+      <image class="ec-img" src="{{routeIcon}}" mode="aspectFit" />
+    </view>
+    <view class="ec-col">
+      <text class="ec-t">我的旅程</text>
+      <text class="ec-d">{{routeName}} · 已走 {{done}}/{{total}} 打卡点</text>
+    </view>
+    <view class="ic-chev light"></view>
+  </view>
+
+</view>

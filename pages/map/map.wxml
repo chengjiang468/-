@@ -1,0 +1,80 @@
+<view class="screen has-tab">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+
+  <nav-bar title="园区地图">
+    <button slot="right" class="nav-btn" open-type="share" hover-class="btn-hover">
+      <view class="ic-share">
+        <view class="sh-rod"></view>
+        <view class="sh-head"></view>
+        <view class="sh-tray"></view>
+      </view>
+    </button>
+  </nav-bar>
+
+  <!-- 线路切换：药丸按文字宽度自适应，居左排列（设计稿 40/256，158×80，间距 20） -->
+  <view class="rf-row">
+    <view class="pill p-{{item.key}} {{routeKey === item.key ? 'on' : ''}}" wx:for="{{routes}}" wx:key="key"
+          data-key="{{item.key}}" bindtap="onPickRoute">{{item.name}}</view>
+  </view>
+
+  <!-- 进度卡：左「绿点 + 线路 · 已解锁」／右「0/18 已打卡」／底部进度条 -->
+  <view class="pcard card">
+    <view class="pc-top">
+      <view class="pc-left">
+        <view class="pc-dot" style="background:{{accentDeep}}"></view>
+        <text class="pc-name">{{route.name}} · 已解锁</text>
+      </view>
+      <view class="pc-right">
+        <text class="pc-num num" style="color:{{accentDeep}}">{{checked}}/{{route.spots.length}}</text>
+        <text class="pc-lbl">已打卡</text>
+      </view>
+    </view>
+    <view class="bar">
+      <view class="bar-in" style="width:{{pct}}%; background:{{accent}}"></view>
+    </view>
+  </view>
+
+  <!-- 园区手绘地图：整张插画即地图，不再叠加序号点。
+       序号点依赖旧版地形的归一化坐标，换成新版手绘地图后位置对不上，
+       按需求整层移除（点位信息在下面的「下一站」卡与首页列表里）。 -->
+  <view class="mapcard card">
+    <movable-area class="mapwrap" style="height:{{mapH}}rpx">
+      <movable-view class="mapzoom" direction="all" inertia
+                    scale scale-min="1" scale-max="3" scale-value="{{zoom}}"
+                    bindscale="onScale" bindtap="onToggleZoom"
+                    style="width:{{mapW}}rpx;height:{{mapH}}rpx">
+        <image class="mapimg" src="{{route.map}}" mode="aspectFit" />
+      </movable-view>
+    </movable-area>
+
+    <!-- 手势提示 / 复原：压在地图右下角，不占版面高度；两颗都可点 -->
+    <view class="map-tip" wx:if="{{!zoomed}}" bindtap="onToggleZoom" hover-class="btn-hover">双指放大</view>
+    <view class="map-reset" wx:else bindtap="onToggleZoom" hover-class="btn-hover">复原</view>
+  </view>
+
+  <!-- 下一站 -->
+  <view class="nxcard card" wx:if="{{next}}" bindtap="onNext" hover-class="btn-hover">
+    <view class="nx-ic" style="background:{{tint}}">
+      <view class="ic-pin" style="border-color:{{accentDeep}}">
+        <view class="ip-dot" style="background:{{accentDeep}}"></view>
+      </view>
+    </view>
+    <view class="nx-col">
+      <text class="nx-t">下一站 · {{next.name}}</text>
+      <text class="nx-d">本线路第 {{next.step}} 站 · 到点打卡</text>
+    </view>
+    <view class="btn btn-ink nx-btn">导航</view>
+  </view>
+
+  <view class="nxcard card" wx:else>
+    <view class="nx-col">
+      <text class="nx-t">这条线路已经走完了</text>
+      <text class="nx-d">去「我的旅程」看看收集到的徽章，或换一条线路继续</text>
+    </view>
+  </view>
+
+</view>

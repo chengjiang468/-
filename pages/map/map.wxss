@@ -1,0 +1,260 @@
+/* ============================================================================
+   园区地图 —— 按设计稿《03-园区地图》逐屏还原
+   设计稿 750×1624px，此屏 1px = 1rpx。括号里的数字即设计稿实测坐标。
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ 导航按钮 */
+/* .nav-btn / .ic-share / .sh-rod / .sh-head / .sh-tray 是全局图标库（app.wxss），
+   这里不再重复定义。 */
+
+/* ------------------------------------------------------------------ 线路切换 */
+/* 设计稿：药丸行 (40,256,158,80)，三枚等宽、间距 20，居左不撑满 */
+.rf-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 30rpx 40rpx 0;
+}
+
+.rf-row .pill {
+  height: 80rpx;
+  padding: 0 32rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--t2);
+  background: var(--glass);
+  border: 2rpx solid var(--glass-line);
+}
+
+.rf-row .pill.on {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------ 进度卡 */
+/* 设计稿：卡片 (42,364,666,164)，边框 2px #E8E3D6 */
+.pcard {
+  margin: 30rpx 40rpx 0;
+  padding: 32rpx 24rpx 26rpx;
+}
+
+.pc-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+
+.pc-left {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  min-width: 0;
+}
+
+.pc-dot {
+  width: 20rpx;                    /* 设计稿 (68,414) 20×20 */
+  height: 20rpx;
+  border-radius: 50%;
+  background: var(--green);
+  flex: none;
+}
+
+.pc-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--t1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pc-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: none;
+}
+
+.pc-num {
+  font-size: 38rpx;                /* 设计稿 (616,398,64,27) */
+  line-height: 1;
+}
+
+.pc-lbl {
+  font-size: 24rpx;
+  color: var(--t3);
+  line-height: 1;
+  margin-top: 8rpx;
+}
+
+/* 进度条 (68,484) 宽 614 高 16；0 进度时也留一小段圆头，与设计稿一致 */
+.pcard .bar {
+  height: 16rpx;
+  background: #EDEAE0;
+}
+
+.pcard .bar-in {
+  min-width: 68rpx;
+}
+
+/* ------------------------------------------------------------------ 地图 */
+/* 设计稿地图卡与进度卡之间只隔 4px（刻意贴在一起的两张卡）
+   地图本身＝整张手绘插画，不叠加任何 marker 层。 */
+.mapcard {
+  margin: 6rpx 40rpx 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 地图容器＝movable-area：宽自适应卡片内宽，高度由 wxml 的 style 给（与图片等比）。 */
+.mapwrap {
+  position: relative;
+  width: 100%;
+  font-size: 0;
+  overflow: hidden;
+}
+
+/* movable-view 自身的尺寸也由 wxml 的 style 给；这里不放固定宽高，
+   免得和 style 打架（movable-view 不设宽高会退回默认 10px，所以必须给）。 */
+.mapzoom {
+  display: block;
+}
+
+/* 图片铺满 movable-view，两者比例一致，所以放大后不会形变 */
+.mapimg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 右下角：未放大时是提示，放大后变成「复原」按钮；两颗都可点 */
+.map-tip,
+.map-reset {
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+  height: 52rpx;
+  padding: 0 24rpx;
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  color: #fff;
+  background: rgba(36, 49, 42, 0.58);
+}
+
+/* 提示态也可点：它就是最容易被发现的「放大」入口 */
+.map-reset {
+  background: var(--brand);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ 下一站 */
+/* 设计稿：卡片 (42,1168,668,152)，图标 96、按钮 120×76 */
+.nxcard {
+  margin: 30rpx 40rpx 0;
+  padding: 0 30rpx 0 24rpx;
+  height: 148rpx;
+  display: flex;
+  align-items: center;
+  gap: 22rpx;
+}
+
+.nx-ic {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 28rpx;
+  background: var(--brand-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+/* 定位针（第 13 轮追加）：三个圆角 + 一个直角，整体 -45° 让尖头正对下方 ——
+   通用「定位」图标就是这么画的。原来是个正圆环下面吊一块旋转小方块，不像定位。
+   只描边不填色，内圈自然透出 .nx-ic 的线路浅底（tint）；颜色走 accentDeep。 */
+.ic-pin {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50% 50% 50% 0;
+  border: 4rpx solid;
+  box-sizing: border-box;
+  transform: rotate(-45deg);
+}
+
+/* 针孔：定位针中心那颗实心点（圆落在中心，父级转了 -45° 也还是圆） */
+.ip-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14rpx;
+  height: 14rpx;
+  margin-left: -7rpx;
+  margin-top: -7rpx;
+  border-radius: 50%;
+}
+
+.nx-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.nx-t {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--t1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nx-d {
+  display: block;
+  font-size: 24rpx;
+  color: var(--t3);
+  margin-top: 10rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nx-btn {
+  width: 120rpx;
+  height: 76rpx;
+  padding: 0;
+  font-size: 26rpx;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ 线路识别色（第 10 轮）
+   三枚药丸的「框」和「字」各自取本条线路的颜色 —— 放电橙 / 双飞粉 / 同频蓝，
+   一眼就能分清自己在哪条线上。放在文件最后，靠顺序压过上面的 `.rf-row .pill` 与
+   `.rf-row .pill.on`（选择器本身也多一层类，双保险）。
+
+   每色分三档，不是随手取的：
+     · 字   —— 色相压深，保证在「白底」和「浅色选中底」上都 ≥4.4:1（药丸字 30rpx = 15px，
+               属于小字号，纸底上必须够黑）；
+     · 框（未选中）—— 该色的浅档，看得见线路身份但不吵；
+     · 选中 —— 浅马卡龙底 + 该色实框 + 该色加粗字。
+   选中态刻意不用「实底填充」：实底就必须把字换成墨色/白色，那样「字＝橙色」就没了。
+   浅底 + 同色框 + 同色字同样能读出选中（另外两颗是白底浅框），且完全符合「框和字都改为橙色」。
+
+   第 11 轮：这三组色值与 data/routes.js 的令牌一一对应 ——
+     字 = accentDeep、选中底 = tint、选中框 = accent（未选中框 = 该色浅档）。
+   以后改线路色，这里和 gen_data.py 要一起改。 */
+.rf-row .pill.p-family { color: #9C5218; border-color: #E8B37A; }
+.rf-row .pill.p-family.on { background: #F9E4CB; border-color: #D98B3F; color: #9C5218; }
+
+.rf-row .pill.p-love { color: #A03B58; border-color: #E9A3B4; }
+.rf-row .pill.p-love.on { background: #FADDE5; border-color: #D9738A; color: #A03B58; }
+
+.rf-row .pill.p-friend { color: #37619F; border-color: #93B5DC; }
+.rf-row .pill.p-friend.on { background: #DFEAF8; border-color: #5B86C4; color: #37619F; }

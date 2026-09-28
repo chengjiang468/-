@@ -1,0 +1,12 @@
+/* 负层级：画在根背景之上、正常流内容之下。
+   不要改成 z-index:0 / 正数 —— 那会盖住页面里的静态元素（它们没有层级）。 */
+.pgbg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: block;
+  z-index: -1;
+  pointer-events: none;
+}

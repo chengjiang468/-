@@ -1,0 +1,59 @@
+<view class="screen">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+
+  <nav-bar title="我的预约" back="{{true}}">
+    <button slot="right" class="nav-btn" open-type="share" hover-class="btn-hover">
+      <view class="ic-share">
+        <view class="sh-rod"></view>
+        <view class="sh-head"></view>
+        <view class="sh-tray"></view>
+      </view>
+    </button>
+  </nav-bar>
+
+  <block wx:if="{{list.length}}">
+
+    <view class="sec-head">
+      <text class="sec-title">已预约 {{count}} 项</text>
+      <text class="sec-more" bindtap="onAll">再约几场 ›</text>
+    </view>
+
+    <!-- 每张卡＝一场已经约过的体验；点卡进活动详情，卡上那颗胶囊单独管「取消」 -->
+    <view class="blist">
+      <view class="bcard card" wx:for="{{list}}" wx:key="title"
+            data-idx="{{item.idx}}" bindtap="onAct" hover-class="btn-hover">
+        <view class="bthumb">
+          <image class="bthumb-i" src="{{item.cover}}" mode="aspectFill" />
+        </view>
+        <view class="bcol">
+          <text class="btitle">{{item.title}}</text>
+          <view class="bmeta">
+            <view class="ic-clock"></view>
+            <text class="bmeta-t">{{item.time}} · {{item.place}}</text>
+          </view>
+          <view class="bfoot">
+            <view class="bday"><text class="num">{{item.day}}</text></view>
+            <view class="bcancel" data-title="{{item.title}}" catchtap="onCancel" hover-class="btn-hover">取消预约</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <text class="bhint" wx:if="{{missing > 0}}">另有 {{missing}} 场已不在本周排期里</text>
+
+    <view class="tail">预约记录存在本机 · 换手机或清缓存会丢失</view>
+  </block>
+
+  <!-- 空态：把「怎么才会有预约」说清楚，并给一个直接去约的入口 -->
+  <view class="empty" wx:else>
+    <view class="emp-ic"><view class="ic-cal big"></view></view>
+    <text class="emp-t">还没有预约任何体验</text>
+    <text class="emp-s">在首页「今日活动」里点开一场，按底部的「预约这场体验」，约过的就会出现在这里。</text>
+    <view class="btn btn-primary emp-btn" bindtap="onAll" hover-class="btn-hover">去看这周有什么</view>
+  </view>
+
+</view>

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "nav-bar": "/components/nav-bar/index",
+    "page-bg": "/components/page-bg/index"
+  },
+  "navigationStyle": "custom",
+  "backgroundColor": "#FBF8F1"
+}

@@ -1,0 +1,66 @@
+<view class="screen has-tab">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+
+  <nav-bar title="我的旅程">
+    <button slot="right" class="nav-btn" open-type="share" hover-class="btn-hover">
+      <view class="ic-share">
+        <view class="sh-rod"></view>
+        <view class="sh-head"></view>
+        <view class="sh-tray"></view>
+      </view>
+    </button>
+  </nav-bar>
+
+  <view class="sub">已走过的路线和收集的徽章</view>
+
+  <!-- 徽章收集：一共 4 枚（3 条线路的成就章 + 1 枚隐藏）。
+       格子里只放徽章本身，不再叠底图 / 图标；点一下看大图。 -->
+  <view class="card bcard">
+    <view class="bc-head">
+      <text class="bc-t">徽章收集</text>
+      <view class="bc-r">
+        <text class="num bc-n">{{badgeGot}}/{{badgeAll}}</text>
+        <text class="bc-s">已收集 · 点看大图</text>
+      </view>
+    </view>
+    <view class="bg">
+      <view class="bi" wx:for="{{badges}}" wx:key="key"
+            style="width:{{tile}}rpx;height:{{tile}}rpx"
+            data-i="{{index}}" bindtap="onBadge" hover-class="btn-hover">
+        <image class="bi-medal {{item.got ? '' : 'off'}}" src="{{item.icon}}" mode="aspectFit" />
+      </view>
+    </view>
+    <text class="bc-foot">单条线路所有打卡点打卡完毕即可获得徽章</text>
+  </view>
+
+  <!-- 三条线路 -->
+  <view class="card lcard">
+    <view class="lc-head">
+      <text class="lc-t">三条线路</text>
+      <text class="lc-s">{{routesDone}}/{{routesAll}} 已走完</text>
+    </view>
+    <view class="lr" wx:for="{{routes}}" wx:key="key" data-key="{{item.key}}"
+          bindtap="onRoute" hover-class="btn-hover">
+      <view class="lr-ic" style="background:{{item.tint}}">
+        <image class="lr-ic-img" src="{{item.icon}}" mode="aspectFit" />
+      </view>
+      <view class="lr-col">
+        <view class="lr-top">
+          <text class="lr-n">{{item.name}}</text>
+          <text class="num lr-p">{{item.done}}/{{item.total}}</text>
+        </view>
+        <view class="bar lr-bar">
+          <view class="bar-in" style="width:{{item.pct}}%; background:{{item.accent}}"></view>
+        </view>
+      </view>
+      <text class="lr-full" wx:if="{{item.full}}">已走完</text>
+    </view>
+  </view>
+
+  <view class="reset" bindtap="onReset" hover-class="btn-hover">清空打卡记录</view>
+
+</view>

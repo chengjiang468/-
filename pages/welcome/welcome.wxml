@@ -1,0 +1,24 @@
+<view class="screen">
+  <view class="hero">
+    <image class="hero-img" src="/assets/img/hero.jpg" mode="aspectFill" />
+
+    <view class="loc-pill" style="top:{{capTop}}rpx" bindtap="onCopyAddress" hover-class="btn-hover">
+      <view class="pin"></view>
+      <text class="loc-tx">{{park.fullName}}</text>
+    </view>
+  </view>
+
+  <view class="wrap">
+    <view class="wcard card">
+      <text class="big title-font">今天，和谁来蝴蝶谷？</text>
+      <text class="sub">三条主题路线 · 放电 / 双飞 / 同频</text>
+
+      <view class="btn btn-primary cta" bindtap="onStart" hover-class="btn-hover">
+        <text class="cta-tx">开启今天的旅程</text>
+        <view class="cta-go">
+          <view class="arrow"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

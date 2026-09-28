@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/home/home",
+    "pages/map/map",
+    "pages/journey/journey",
+    "pages/profile/profile",
+    "pages/activities/activities",
+    "pages/activity/activity",
+    "pages/bookings/bookings",
+    "pages/spot/spot"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#FBF8F1",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#93A199",
+    "selectedColor": "#3F9A66",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "首页" },
+      { "pagePath": "pages/map/map", "text": "地图" },
+      { "pagePath": "pages/journey/journey", "text": "旅程" },
+      { "pagePath": "pages/profile/profile", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

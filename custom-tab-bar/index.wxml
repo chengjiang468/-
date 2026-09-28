@@ -1,0 +1,14 @@
+<view class="tbar" style="bottom:{{bottom}}rpx">
+  <view class="tbar-pill">
+    <view
+      class="tab {{selected === index ? 'on' : ''}}"
+      wx:for="{{list}}"
+      wx:key="text"
+      data-i="{{index}}"
+      bindtap="onTap"
+    >
+      <image class="tab-ic" src="{{selected === index ? item.on : item.icon}}" mode="aspectFit" />
+      <text class="tab-tx">{{item.text}}</text>
+    </view>
+  </view>
+</view>

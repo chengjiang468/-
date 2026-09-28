@@ -1,0 +1,605 @@
+/* 第 12 轮：这里原来是顶栏（.topbar + .tb-round + .tb-avatar，通知铃铛与头像两枚圆钮），
+   按用户要求整块删除。顶部间距改由 .search-row 的 margin-top 承担（见 home.js 的 gap）。 */
+
+/* 放大镜（CSS 画，避免为图标单开图片） */
+.ic-search {
+  width: 26rpx;
+  height: 26rpx;
+  border: 3rpx solid #93A199;
+  border-radius: 50%;
+  position: relative;
+  flex: none;
+}
+
+.ic-search::after {
+  content: '';
+  position: absolute;
+  right: -9rpx;
+  bottom: -4rpx;
+  width: 14rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  background: #93A199;
+  transform: rotate(45deg);
+}
+
+/* ------------------------------------------------------------------ 搜索行 */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  padding: 0 40rpx;
+  height: 96rpx;
+}
+
+.sbox {
+  flex: 1;
+  min-width: 0;
+  height: 96rpx;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  border-radius: 999rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+}
+
+.sinput {
+  flex: 1;
+  min-width: 0;
+  font-size: 26rpx;
+  color: var(--t1);
+  margin-left: 20rpx;
+  height: 60rpx;
+}
+
+.ph {
+  color: var(--t3);
+  font-size: 26rpx;
+}
+
+.sclear {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: #EDEADF;
+  color: #93A199;
+  font-size: 30rpx;
+  line-height: 44rpx;
+  text-align: center;
+  flex: none;
+}
+
+/* 搜索框右侧原来那枚「筛选」圆钮已移除（点了没有任何实际作用），
+   相关样式 .sfilter / .ic-sliders / .sl / .sld 一并删掉，不留死代码。 */
+
+/* ------------------------------------------------------------------ 线路筛选 */
+.rf-row {
+  display: flex;
+  gap: 18rpx;
+  padding: 26rpx 40rpx 0;
+}
+
+.rf-row .pill {
+  height: 72rpx;
+  padding: 0 28rpx;
+  font-size: 28rpx;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ 区块标题 */
+.sec-head {
+  margin-top: 38rpx;
+  margin-bottom: 22rpx;
+}
+
+.sec-title {
+  font-size: 34rpx;
+}
+
+/* ------------------------------------------------------------------ 线路推荐卡 */
+.rcard {
+  position: relative;
+  margin: 0 40rpx;
+  padding: 44rpx 44rpx 34rpx;
+}
+
+/* 卡右上角压边的和纸胶带（不能给卡加 overflow:hidden，否则被裁） */
+.rtape {
+  right: 18rpx;
+  top: -26rpx;
+  width: 196rpx;
+  height: 52rpx;
+  transform: rotate(8deg);
+  z-index: 2;
+}
+
+.rcover-wrap {
+  position: relative;
+  width: 100%;
+  height: 316rpx;
+  border-radius: 28rpx;
+  overflow: hidden;
+}
+
+.rcover {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.rrate {
+  position: absolute;
+  left: 24rpx;
+  top: 24rpx;
+  height: 48rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: var(--glass-lit);
+  -webkit-backdrop-filter: blur(16rpx);
+  backdrop-filter: blur(16rpx);
+  display: flex;
+  align-items: center;
+}
+
+.rrate-s {
+  font-size: 22rpx;
+  color: var(--brand-deep);
+  margin-right: 6rpx;
+}
+
+.rrate-n {
+  font-size: 24rpx;
+  color: var(--t1);
+}
+
+.rfav {
+  position: absolute;
+  right: 24rpx;
+  top: 24rpx;
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 50%;
+  background: var(--glass-lit);
+  -webkit-backdrop-filter: blur(16rpx);
+  backdrop-filter: blur(16rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 纯 CSS 心形（不用 SVG，避免小程序端渲染差异） */
+.ic-heart {
+  position: relative;
+  width: 20rpx;
+  height: 20rpx;
+  background: #E2695F;
+  transform: rotate(-45deg);
+}
+
+.ic-heart::before,
+.ic-heart::after {
+  content: '';
+  position: absolute;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: #E2695F;
+}
+
+.ic-heart::before { top: -10rpx; left: 0; }
+.ic-heart::after { top: 0; left: 10rpx; }
+
+.rtag {
+  position: absolute;
+  left: 24rpx;
+  bottom: 24rpx;
+  color: #FFFFFF;
+  font-size: 20rpx;
+  font-weight: 600;
+}
+
+.rbody {
+  padding-top: 27rpx;
+}
+
+.rname {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--t1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rmeta {
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+}
+
+.ic-clock {
+  position: relative;
+  width: 26rpx;
+  height: 26rpx;
+  border: 3rpx solid #93A199;
+  border-radius: 50%;
+  flex: none;
+  margin-right: 12rpx;
+}
+
+.ic-clock::before {
+  content: '';
+  position: absolute;
+  left: 9rpx;
+  top: 4rpx;
+  width: 3rpx;
+  height: 8rpx;
+  border-radius: 2rpx;
+  background: #93A199;
+}
+
+.ic-clock::after {
+  content: '';
+  position: absolute;
+  left: 9rpx;
+  top: 11rpx;
+  width: 8rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  background: #93A199;
+}
+
+.rmeta-t {
+  font-size: 24rpx;
+  color: var(--t3);
+}
+
+/* ------------------------------------------------------------------ 智能选路引导卡 */
+.smart {
+  height: 156rpx;
+  margin: 32rpx 40rpx 0;
+  padding: 32rpx;
+  display: flex;
+  align-items: center;
+}
+
+.sm-ic {
+  width: 92rpx;
+  height: 92rpx;
+  border-radius: 28rpx;
+  background: var(--glass-lit);
+  -webkit-backdrop-filter: blur(16rpx);
+  backdrop-filter: blur(16rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.ic-pen {
+  position: relative;
+  width: 34rpx;
+  height: 34rpx;
+}
+
+.ic-pen::before {
+  content: '';
+  position: absolute;
+  left: 13rpx;
+  top: 2rpx;
+  width: 9rpx;
+  height: 26rpx;
+  border-radius: 5rpx;
+  background: var(--green);
+  transform: rotate(38deg);
+}
+
+.ic-pen::after {
+  content: '';
+  position: absolute;
+  left: 4rpx;
+  bottom: 2rpx;
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.sm-col {
+  flex: 1;
+  min-width: 0;
+  margin-left: 24rpx;
+}
+
+.sm-t {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--t1);
+  line-height: 1.4;
+}
+
+.sm-d {
+  display: block;
+  font-size: 21rpx;
+  color: var(--t2);
+  margin-top: 4rpx;
+}
+
+/* 设计稿里引导卡 156 = 上下内边距 32 + 92，左右两个 92 的方块 */
+.sm-go {
+  width: 92rpx;
+  height: 92rpx;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.chev-w {
+  width: 18rpx;
+  height: 18rpx;
+  border-top: 4rpx solid #FFFFFF;
+  border-right: 4rpx solid #FFFFFF;
+  transform: rotate(45deg);
+  margin-left: -6rpx;
+}
+
+/* ------------------------------------------------------------------ 今日活动 */
+/* 首页只放 4 张，横向滑；点卡片进对应的活动详情页（＝那处点位的页面） */
+.awrap {
+  width: 100%;
+  white-space: nowrap;
+}
+
+.arow {
+  display: flex;
+  gap: 24rpx;
+  padding: 0 40rpx;
+}
+
+/* 第 13 轮：「今日活动」内容框 —— 与开屏欢迎卡同配方的半透磨砂底。
+   四边等距 24rpx：框内宽 618rpx 正好放下「2 张卡 + 24rpx 间距」（2×297+24），
+   可见的两张卡因此左右留白完全对称（原先是左 24 / 右 0，右卡被切在框边）。
+   第 3、4 张靠横滑看；.arow 的右内边距只影响滑到底时的收尾留白。 */
+.ac-panel {
+  margin: 0 40rpx;
+  padding: 24rpx;
+  border-radius: 40rpx;
+  overflow: hidden;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+}
+
+.ac-panel .arow {
+  padding: 0 24rpx 0 0;
+}
+
+.ac {
+  width: 297rpx;
+  flex: none;
+}
+
+.ac-cov {
+  position: relative;
+  width: 297rpx;
+  height: 177rpx;
+  border-radius: 28rpx;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.ac-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ac-day {
+  position: absolute;
+  left: 16rpx;
+  top: 16rpx;
+  height: 44rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: var(--glass-lit);
+  -webkit-backdrop-filter: blur(16rpx);
+  backdrop-filter: blur(16rpx);
+  display: flex;
+  align-items: center;
+}
+
+.ac-day .num {
+  font-size: 21rpx;
+  color: var(--t1);
+  line-height: 1;
+}
+
+.ac-bk {
+  position: absolute;
+  right: 16rpx;
+  top: 16rpx;
+  height: 44rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  background: var(--brand);
+  color: var(--ink);
+  font-size: 21rpx;
+  line-height: 44rpx;
+}
+
+.ac-t {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 27rpx;
+  font-weight: 700;
+  color: var(--t1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ac-m {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 21rpx;
+  color: var(--t3);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ------------------------------------------------------------------ 随机选路弹窗 */
+.pk-k {
+  display: block;
+  font-size: 24rpx;
+  color: var(--t3);
+  margin-bottom: 22rpx;
+}
+
+.pk-badge {
+  width: 190rpx;
+  height: 190rpx;
+  border-radius: 48rpx;
+  margin: 0 auto 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pk-img {
+  width: 84%;
+  height: 84%;
+}
+
+.pk-n {
+  display: block;
+  font-size: 46rpx;
+  line-height: 1.25;
+}
+
+.pk-tag {
+  display: block;
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: var(--t3);
+}
+
+.pk-fun {
+  background: var(--cream);
+  border-radius: 36rpx;
+  padding: 28rpx 30rpx;
+  margin: 28rpx 0 32rpx;
+}
+
+.pk-f {
+  display: block;
+  font-size: 25rpx;
+  line-height: 1.75;
+  color: var(--t2);
+  text-align: center;
+}
+
+.pk-btn {
+  width: 100%;
+}
+
+.pk-again {
+  margin-top: 24rpx;
+  font-size: 24rpx;
+  color: var(--t3);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------------ 搜索结果 */
+.slist {
+  padding: 0 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.srow {
+  display: flex;
+  align-items: center;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  border-radius: 40rpx;
+  padding: 20rpx 28rpx 20rpx 20rpx;
+}
+
+.simg {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 28rpx;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  overflow: hidden;
+}
+
+.simg-i {
+  width: 92rpx;
+  height: 92rpx;
+}
+
+.scol {
+  flex: 1;
+  min-width: 0;
+  margin-left: 24rpx;
+}
+
+.srow-nm {
+  display: block;
+  font-size: 27rpx;
+  font-weight: 600;
+  color: var(--t1);
+}
+
+.srow-mt {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-top: 6rpx;
+}
+
+.srow-ct {
+  font-size: 21rpx;
+  color: var(--t3);
+}
+
+.srow-ar {
+  font-size: 40rpx;
+  color: #D5D2C6;
+  margin-left: 12rpx;
+}
+
+.empty {
+  padding: 80rpx 40rpx;
+  text-align: center;
+}
+
+.empty-t {
+  display: block;
+  font-size: 28rpx;
+  color: var(--t2);
+}
+
+.empty-s {
+  display: block;
+  font-size: 22rpx;
+  color: var(--t3);
+  margin-top: 10rpx;
+}

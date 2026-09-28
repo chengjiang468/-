@@ -1,0 +1,2 @@
+<!-- 整屏背景：fixed + 100vh，滚动时钉住不动；aspectFill 按屏比裁切，不露底 -->
+<image class="pgbg" src="/assets/img/bg-page.jpg" mode="aspectFill" />

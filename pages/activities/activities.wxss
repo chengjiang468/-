@@ -1,0 +1,184 @@
+/* ============================================================================
+   今日活动 —— 按设计稿《05-今日活动》逐屏还原
+   设计稿 750×1624px，此屏 1px = 1rpx。括号里的数字即设计稿实测坐标。
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ 区块标题 */
+/* 原来的「智能选路」薄荷卡已整块移到首页，这一页的第一个元素就是标题行 */
+.sec-head {
+  margin-top: 40rpx;
+  margin-bottom: 30rpx;
+}
+
+.sec-title {
+  font-size: 34rpx;
+}
+
+/* ------------------------------------------------------------------ 活动卡 */
+.alist {
+  padding: 0 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 28rpx;
+}
+
+.acard {
+  overflow: hidden;
+}
+
+/* 设计稿：封面内缩 24、高 190、圆角 28 */
+.acover-wrap {
+  position: relative;
+  height: 190rpx;
+  margin: 24rpx 24rpx 0;
+  border-radius: 28rpx;
+  overflow: hidden;
+}
+
+.acover {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.adate {
+  position: absolute;
+  left: 24rpx;
+  top: 24rpx;
+  height: 48rpx;
+  padding: 0 24rpx;
+  border-radius: 999rpx;
+  background: var(--glass-lit);
+  -webkit-backdrop-filter: blur(16rpx);
+  backdrop-filter: blur(16rpx);
+  display: flex;
+  align-items: center;
+}
+
+.adate .num {
+  font-size: 24rpx;
+  color: var(--t1);
+  line-height: 1;
+}
+
+.abody {
+  padding: 22rpx 26rpx 26rpx;
+}
+
+.atop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.atitle {
+  flex: 1;
+  min-width: 0;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--t1);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 价格本身就是「预约 / 取消预约」的开关：设计稿上这里只有一行橙色价格文字，
+   加按钮会破坏版式，所以让这行文字承担交互，已约时变成实心绿色标签。 */
+.aprice {
+  flex: none;
+  margin-left: 20rpx;
+  height: 44rpx;
+  padding: 0 20rpx;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  line-height: 44rpx;
+  color: var(--brand);
+}
+
+.aprice.on {
+  font-size: 24rpx;
+  color: var(--ink);
+  background: var(--brand);
+}
+
+.ameta {
+  display: flex;
+  align-items: center;
+  margin-top: 18rpx;
+}
+
+.ameta-t {
+  font-size: 24rpx;
+  color: var(--t3);
+  margin-left: 12rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 卡点进去是活动详情（介绍 / 小科普 / 温馨提示），不是打卡页 —— 明说一句 */
+.ahint {
+  margin-top: 16rpx;
+  font-size: 22rpx;
+  color: var(--brand-deep);
+}
+
+/* ------------------------------------------------------------------ 我的旅程入口 */
+/* 设计稿 (40,1272,670,128)：图标块 80、内边距 30 */
+.entry {
+  margin: 28rpx 40rpx 0;
+  padding: 24rpx 30rpx;
+  background: var(--ink);
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+}
+
+.ec-ic {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 24rpx;
+  background: #3B4C42;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+/* 当前线路的拼贴插画；浅色纸片压在深色底片上，比原来的 CSS 小图标更手账 */
+.ec-img {
+  width: 86%;
+  height: 86%;
+}
+
+.ec-col {
+  flex: 1;
+  min-width: 0;
+  margin-left: 24rpx;
+}
+
+.ec-t {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.ec-d {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 6rpx;
+}
+
+.ic-chev.light {
+  border-color: #FFFFFF;
+}
+
+.tail {
+  padding: 40rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  text-align: center;
+  font-size: 20rpx;
+  color: var(--t3);
+}

@@ -1,0 +1,175 @@
+/* 第 11 轮：开屏改成「整屏主视觉」。
+   用户给的那张拼贴图直接铺满整个首屏（不再只占顶部 1244rpx，也不再有底部白色渐变过渡）；
+   欢迎卡浮在图片下部的留白区上，做成半透明玻璃卡。页面级纸胶带装饰（.wl / .wr）已删除；
+   右上角那只白色线条蝴蝶（assets/deco/butterfly.png，即 .fly）于第 12 轮按用户要求删除。 */
+.screen {
+  position: relative;
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+/* ------------------------------------------------------------------ 主视觉 */
+/* fixed + 100vh：图片永远铺满可视区，滚动也钉住，不露出页面底色。
+   图片 750x1624 与首屏同比例，aspectFill 在主流机型上几乎无裁切。 */
+.hero {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* 第 13 轮：按用户要求把主视觉向右移一点，并等比放大。
+     放大是为了「位移不留白」：scale(1.16) 时左右各多出 9% 的余量（约 67.5rpx），
+     右移 44rpx 之后左缘还剩 23rpx 覆盖，不会露出页面底色。
+     容器 .hero 有 overflow:hidden，多出来的部分直接裁掉。 */
+  transform: translateX(44rpx) scale(1.16);
+}
+
+.loc-pill {
+  position: absolute;
+  left: 48rpx;
+  height: 72rpx;
+  padding: 0 28rpx 0 22rpx;
+  border-radius: 999rpx;
+  /* 第 13 轮：与欢迎卡同一套磨砂语言（压在图上，用 lit 档更实一点） */
+  background: var(--glass-lit);
+  -webkit-backdrop-filter: blur(16rpx);
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid var(--glass-line);
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6rpx 20rpx rgba(36, 49, 42, 0.08);
+}
+
+.pin {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: #2F6B4C;
+  position: relative;
+  margin-right: 14rpx;
+  flex: none;
+}
+
+.pin::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 14rpx;
+  margin-left: -6rpx;
+  border-left: 6rpx solid transparent;
+  border-right: 6rpx solid transparent;
+  border-top: 10rpx solid #2F6B4C;
+}
+
+.loc-tx {
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #2F6B4C;
+}
+
+/* ------------------------------------------------------------------ 欢迎卡 */
+/* 撑满一屏 + 底对齐：卡片永远贴在首屏底部，图片自己铺满没有露底。 */
+.wrap {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  padding: 0 40rpx calc(56rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* 设计稿：卡宽 670，内边距 44；卡内纵向节奏 36 / 14 / 24 / 26 */
+/* 半透明玻璃卡：底色 alha 0.62 + 20rpx 背景模糊（不支持的端自动退化成纯半透明白，
+   因为卡下方是纸白留白区，退化后依然可读）。 */
+.wcard {
+  position: relative;
+  padding: 44rpx 44rpx 44rpx;
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12rpx 44rpx rgba(36, 49, 42, 0.10);
+}
+
+.big {
+  display: block;
+  font-size: 54rpx;
+  line-height: 1.28;
+  color: var(--t1);
+  margin-bottom: 31rpx;
+}
+
+.sub {
+  display: block;
+  font-size: 24rpx;
+  color: var(--t2);
+  margin-bottom: 31rpx;
+}
+
+/* CTA：高 108rpx，文字左起 44rpx，右侧白色箭头圆钮 76rpx / 距边 16rpx */
+.cta {
+  height: 108rpx;
+  justify-content: space-between;
+  padding: 0 16rpx 0 44rpx;
+}
+
+.cta-tx {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 1rpx;
+}
+
+.cta-go {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 50%;
+  background: var(--glass-lit);
+  -webkit-backdrop-filter: blur(16rpx);
+  backdrop-filter: blur(16rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+/* 指向右的箭头（杆 + 尖），设计稿的 CTA 里就是这个 */
+.arrow {
+  position: relative;
+  width: 28rpx;
+  height: 28rpx;
+}
+
+.arrow::before {
+  content: '';
+  position: absolute;
+  left: 1rpx;
+  top: 12rpx;
+  width: 23rpx;
+  height: 4rpx;
+  border-radius: 2rpx;
+  background: var(--brand-deep);
+}
+
+.arrow::after {
+  content: '';
+  position: absolute;
+  right: 3rpx;
+  top: 7rpx;
+  width: 12rpx;
+  height: 12rpx;
+  border-top: 4rpx solid var(--brand-deep);
+  border-right: 4rpx solid var(--brand-deep);
+  transform: rotate(45deg);
+}

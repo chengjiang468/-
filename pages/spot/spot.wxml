@@ -1,0 +1,126 @@
+<nav-bar title="{{spot.name}}" back="{{true}}" bordered="{{true}}">
+  <view slot="right" class="nav-btn" bindtap="onNavigate" hover-class="btn-hover">
+    <view class="ic-nav"></view>
+  </view>
+</nav-bar>
+
+<view class="screen">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+  <block wx:if="{{spot}}">
+
+    <!-- 插画 -->
+    <view class="hero card-paper">
+      <view class="washi washi-peach hw1"></view>
+      <view class="washi washi-sage hw2"></view>
+      <image class="hero-ic" src="{{spot.icon}}" mode="aspectFit" />
+      <view class="hero-chip chip" style="background:{{color}}">{{spot.cat}}</view>
+
+      <!-- 打卡戳：邮戳样式（双圈 + 已打卡 + 日期），不是原来的金印章 -->
+      <view class="pmark stamp-anim" wx:if="{{done}}" style="color:{{accentDeep}}">
+        <view class="pm-ring"></view>
+        <text class="pm-t">已打卡</text>
+        <text class="pm-d num">{{atDay}}</text>
+      </view>
+    </view>
+
+    <!-- 标题 + 打卡态 -->
+    <view class="head">
+      <text class="nm title-font">{{spot.name}}</text>
+      <view class="st">
+        <text class="st-t {{done ? 'done' : ''}}">{{done ? '已打卡' : '待打卡'}}</text>
+        <text class="st-d">{{lineName}} · {{stepTxt}}</text>
+      </view>
+      <text class="st-at num" wx:if="{{done}}">盖章时间 {{at}}</text>
+    </view>
+
+    <!-- 简介 -->
+    <view class="card sec">
+      <text class="sec-h">关于这里</text>
+      <text class="sec-b">{{spot.intro}}</text>
+    </view>
+
+    <!-- 出现在哪些线路上：点一下切到那条线（重合点位要按新线重新盖章） -->
+    <view class="card sec">
+      <text class="sec-h">出现在这些线路上</text>
+      <text class="sec-note">每条线路的印章各自计算 · 点一下切到这条线</text>
+      <view class="ln" wx:for="{{lines}}" wx:key="key"
+            data-key="{{item.key}}" bindtap="onGoLine" hover-class="btn-hover"
+            style="background:{{item.tint}}">
+        <view class="dot" style="background:{{item.accentDeep}}"></view>
+        <text class="ln-n" style="color:{{item.accentDeep}}">{{item.name}}</text>
+        <text class="ln-s">第 {{item.step}} / {{item.total}} 站</text>
+        <text class="ln-st {{item.done ? 'on' : ''}}">{{item.done ? '已盖章' : (item.current ? '当前线路' : '未盖章')}}</text>
+      </view>
+    </view>
+
+    <!-- 附近同类 -->
+    <block wx:if="{{nearby.length}}">
+      <view class="sec-head">
+        <text class="sec-title">同类的其他点位</text>
+      </view>
+      <scroll-view class="nwrap" scroll-x enable-flex show-scrollbar="{{false}}">
+        <view class="nrow">
+          <view class="nc" wx:for="{{nearby}}" wx:key="id" data-id="{{item.id}}" bindtap="onNearby" hover-class="btn-hover">
+            <view class="nc-img">
+              <image class="nc-ic" src="{{item.icon}}" mode="aspectFit" />
+              <view class="tick" wx:if="{{item.done}}">✓</view>
+            </view>
+            <text class="nc-nm">{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </block>
+
+    <view class="tail">江门 · 百合镇蝴蝶谷 · 园区导览</view>
+  </block>
+</view>
+
+<!-- 底部行动条 -->
+<view class="actionbar" wx:if="{{spot}}">
+  <view class="ab-btn {{done ? 'btn-ghost' : 'btn-primary'}} btn" bindtap="onToggle" hover-class="btn-hover">
+    {{done ? '取消打卡' : ('在' + lineName + '上盖章')}}
+  </view>
+</view>
+
+<!-- 打卡弹窗 -->
+<view class="mask" wx:if="{{showDialog}}" bindtap="onCloseDialog">
+  <view class="dialog rise" catchtap="noop">
+
+    <!-- 走完一条线：把这条线的成就徽章放大展示（带发放动画） -->
+    <block wx:if="{{bigBadge}}">
+      <text class="dl-k bb-k">走完{{doneLineName}}</text>
+      <view class="bb-stage">
+        <view class="bb-glow"></view>
+        <view class="bb-halo"></view>
+        <view class="bb-halo d2"></view>
+        <view class="ray r1"><view class="ray-i"></view></view>
+        <view class="ray r2"><view class="ray-i"></view></view>
+        <view class="ray r3"><view class="ray-i"></view></view>
+        <view class="ray r4"><view class="ray-i"></view></view>
+        <view class="bigbadge">
+          <image class="bb-img" src="{{bigBadge.icon}}" mode="aspectFit" />
+        </view>
+      </view>
+      <text class="dialog-title bb-name">{{bigBadge.name}}</text>
+      <text class="bb-desc">“{{bigBadge.desc}}”</text>
+      <text class="bb-cond">{{bigBadge.cond}}</text>
+    </block>
+
+    <!-- 普通打卡：两行，居中 -->
+    <block wx:else>
+      <view class="pmark dlmark stamp-anim" style="color:{{accentDeep}}">
+        <view class="pm-ring"></view>
+        <text class="pm-t">已打卡</text>
+        <text class="pm-d num">{{atDay}}</text>
+      </view>
+      <text class="dialog-title">盖章成功</text>
+      <text class="dialog-sub">地点已记进你的手账本</text>
+    </block>
+
+    <view class="btn btn-primary dl-btn" bindtap="onCloseDialog">好</view>
+  </view>
+</view>

@@ -1,0 +1,70 @@
+<view class="screen has-tab">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+
+  <nav-bar title="我的" align="left">
+    <button slot="right" class="nav-btn" open-type="share" hover-class="btn-hover">
+      <view class="ic-share">
+        <view class="sh-rod"></view>
+        <view class="sh-head"></view>
+        <view class="sh-tray"></view>
+      </view>
+    </button>
+  </nav-bar>
+
+  <!-- 资料卡 (40,264,670,332) -->
+  <view class="card pcard">
+    <view class="pc-head">
+      <view class="avatar"></view>
+      <view class="pc-col">
+        <text class="pc-nick">{{profile.nick}}</text>
+        <text class="num pc-id" bindtap="onCopyId">ID · {{profile.id}}</text>
+      </view>
+      <view class="pc-edit" bindtap="onEditProfile" hover-class="btn-hover">
+        <view class="ic-pencil"></view>
+      </view>
+    </view>
+
+    <view class="stats">
+      <view class="st">
+        <text class="num st-n c-brand">{{badges}}</text>
+        <text class="st-l">枚徽章</text>
+      </view>
+      <view class="st mint">
+        <text class="num st-n c-green">{{routesDone}}/{{routesAll}}</text>
+        <text class="st-l">景点解锁</text>
+      </view>
+      <view class="st">
+        <text class="num st-n c-gold">{{secret}}</text>
+        <text class="st-l">隐藏成就</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 第 11 轮：「徽章收集」整块移除（用户要求，不再在「我的」页摊开徽章格）。
+       徽章本身仍按线路在「我的旅程」页展示；上面资料卡里的徽章统计也照旧。 -->
+
+  <!-- 功能列表 (40,628,670,380) -->
+  <view class="card flist">
+    <view class="fr fr-bookings" bindtap="onBookings" hover-class="btn-hover">
+      <view class="fr-ic mint"><view class="ic-cal"></view></view>
+      <text class="fr-n">我的预约</text>
+      <text class="fr-v">{{booked}} 项</text>
+      <view class="ic-chev"></view>
+    </view>
+  </view>
+
+  <!-- 建议信箱 (40,1024,670,176) -->
+  <view class="card sand" bindtap="onFeedback" hover-class="btn-hover">
+    <view class="tape tape-orange sd-tape"></view>
+    <view class="sd-ic"><view class="ic-mail"></view></view>
+    <text class="sd-t">建议信箱</text>
+    <view class="ic-chev dark"></view>
+  </view>
+
+  <text class="ver" bindtap="onAbout" hover-class="btn-hover">蝴蝶谷 v1.0 · 江门市百合镇</text>
+
+</view>

@@ -1,0 +1,549 @@
+/* ============================================================================
+   蝴蝶谷 · 园区导览小程序 —— 全局样式（拼贴手账风设计令牌）
+   基准：设计稿 375px 宽 → 1px = 2rpx
+   ========================================================================== */
+
+page {
+  /* 底与面 */
+  --paper: #FBF8F1;
+  --board: #DDE5D2;
+  --card: #FFFFFF;
+  --cream: #F5F1E4;
+  --mint: #E6F1E3;
+  /* 主色：草坡绿。第 9 轮把第 8 轮那版偏深的 #2F8F5B 调浅调柔，并拆成两档：
+     --brand      是「面」——按钮底、进度条、选中态、图标（一律配墨色字 var(--ink)）；
+     --brand-deep 是「字与细线」——纸底上的绿色文字、邮戳、线路名。
+     同一个绿当底色和当字色，可读性要求是相反的：调浅后白字压不住，所以填充不用白字。 */
+  --brand-soft: #E8F5ED;
+  --rose-soft: #FBE9EE;
+  --sand: #F0E3C8;
+
+  /* 主色 */
+  --brand: #65B98A;
+  --brand-deep: #3F9A66;
+  --ink: #24312A;
+  --green: #2F6B4C;
+  --gold: #C9922B;
+
+  /* 文字 */
+  --t1: #24312A;
+  --t2: #5C6B62;
+  --t3: #93A199;
+
+  /* 线与面 */
+  --line: #EDEADF;
+  --line-2: #E3E0D4;
+  --line-3: #DDE5D2;
+  /* 白卡片描边（设计稿实测 2px #E8E3D6，卡片是「描边」而不是「投影」） */
+  --card-line: #E8E3D6;
+
+  /* 半透磨砂玻璃（第 13 轮）。整站铺了背景图之后，原来的不透明白卡片会把图挡死，
+     所以全站统一成「62% 白 + 20rpx 背景模糊 + 白色发丝边」——
+     数值与开屏欢迎卡 .wcard 完全一致，两处视觉上是一套。
+
+     分三档是因为「玻璃压在不同的底上」要求不同：
+       --glass      普通卡片 / 面板 / 胶囊，底下是背景图，62% 够透；
+       --glass-lit  压在照片或封面图上的小胶囊，62% 会被照片的深色吃掉字，要更实；
+       --glass-mint / --glass-sand  原本就是有色的卡片（智能选路 / 活动提示），
+                    保留色相、只做半透，不然会变成全站唯一两块不透明的板。 */
+  --glass: rgba(255, 255, 255, 0.62);
+  --glass-lit: rgba(255, 255, 255, 0.78);
+  --glass-mint: rgba(230, 241, 227, 0.78);
+  --glass-sand: rgba(240, 227, 200, 0.78);
+  --glass-line: rgba(255, 255, 255, 0.72);
+
+  /* 字体：界面只用两套字 —— 手账大标题（圆体）与正文/UI（无衬线）。
+     手写批注体（Ma Shan Zheng / 楷体）已在 0.9 版下线：各端回落到宋体/楷体，
+     与手账风不搭，相关文案一并移除。 */
+  --f-title: "ZCOOL KuaiLe", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --f-ui: "Noto Sans SC", -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --f-num: "Inter", "DIN Alternate", -apple-system, "PingFang SC", sans-serif;
+
+  background: var(--paper);
+  color: var(--t1);
+  font-family: var(--f-ui);
+  font-size: 26rpx;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 尺寸一律按 border-box 计算：浮动胶囊标签栏这类「固定宽 + 内边距 + 描边」的结构
+   若按 content-box 算，padding/border 会额外撑出去，导致底部标签栏溢出屏幕。 */
+view, text, scroll-view, image, button, input, textarea, navigator, slot {
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------- 版式 */
+/* 第 13 轮：页面底改透明 —— 各页的 <page-bg /> 用 z-index:-1 画在
+   「根背景之上、内容之下」，.screen 若还留纸色就会把它整块盖住。
+   兜底纸色仍在 page{} 上，图加载失败也不会变白屏。 */
+.screen {
+  min-height: 100vh;
+  background: transparent;
+}
+
+/* 有浮动胶囊标签栏的页面，底部留位 */
+.has-tab {
+  padding-bottom: calc(240rpx + env(safe-area-inset-bottom));
+}
+
+/* 页面左右统一留白 40rpx（设计稿 20px） */
+.gutter {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+}
+
+.title-font {
+  font-family: var(--f-title);
+}
+
+.num {
+  font-family: var(--f-num);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.t1 { color: var(--t1); }
+.t2 { color: var(--t2); }
+.t3 { color: var(--t3); }
+
+/* 区块标题行 */
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.sec-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: var(--t1);
+}
+
+.sec-more {
+  font-size: 24rpx;
+  color: var(--t3);
+}
+
+/* 「更多」里的**可点入口**（首页今日活动的「查看全部」）走深一档绿：
+   磨砂底上不能用浅绿 --brand（2.5:1 压不住），--t3 灰留给「共 N 项」那种陈述性计数。 */
+.sec-more.link {
+  color: var(--brand-deep);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- 卡片 */
+.card {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  border-radius: 48rpx;
+  box-shadow: 0 6rpx 24rpx rgba(36, 49, 42, 0.05);
+}
+
+.card-flat {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  border-radius: 48rpx;
+}
+
+/* 「一块玻璃」——需要磨砂底时直接挂这个类，数值与 .card 一致（只是不带圆角/投影） */
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+}
+
+/* 第 13 轮：这张「纸纹奶油卡」原来是 base64 内联纸纹 + 实心奶油底（见下方删除说明），
+   全站换成背景图 + 磨砂之后，它是唯一还会把底图挡死的大块，故一并改成磨砂玻璃。
+   顺带省掉内联 base64 的 ~1.6 KB。 */
+.card-paper {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  border-radius: 48rpx;
+}
+
+.card-mint {
+  background: var(--glass-mint);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  border-radius: 48rpx;
+}
+
+.card-sand {
+  background: var(--glass-sand);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  border-radius: 48rpx;
+}
+
+.card-dark {
+  background: var(--ink);
+  border-radius: 48rpx;
+}
+
+/* ---------------------------------------------------------------- 胶囊 / 标签 */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56rpx;
+  padding: 0 26rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  color: var(--t2);
+  border: 2rpx solid var(--glass-line);
+}
+
+.pill.on {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 40rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+}
+
+.dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  flex: none;
+}
+
+/* ---------------------------------------------------------------- 按钮 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  border-radius: 999rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: var(--ink);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  color: var(--t1);
+  border: 2rpx solid var(--glass-line);
+}
+
+.btn-sm {
+  height: 64rpx;
+  font-size: 24rpx;
+  padding: 0 32rpx;
+}
+
+.btn-hover {
+  opacity: 0.82;
+  transform: scale(0.985);
+}
+
+/* 二级页的底部悬浮行动条（点位页、活动详情页共用）。
+   底色从透明渐变到纸色，让正文滑到按钮下面时不生硬地「切一刀」。 */
+.actionbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20rpx 40rpx calc(24rpx + env(safe-area-inset-bottom));
+  /* 第 13 轮：原来是「渐隐到实心纸色」，现在底是背景图，实心纸色会切一条白带；
+     改成渐隐到 86% 纸色 —— 压得住滑上来的正文，又能看见身后的图。 */
+  background: linear-gradient(180deg, rgba(251, 248, 241, 0) 0%, rgba(251, 248, 241, 0.86) 38%, rgba(251, 248, 241, 0.96) 100%);
+  z-index: 40;
+}
+
+.actionbar .btn {
+  box-shadow: 0 8rpx 24rpx rgba(36, 49, 42, 0.14);
+}
+
+/* ---------------------------------------------------------------- 进度条 */
+.bar {
+  height: 16rpx;
+  border-radius: 999rpx;
+  background: #EDEAE0;
+  overflow: hidden;
+}
+
+.bar-in {
+  height: 100%;
+  border-radius: 999rpx;
+  background: var(--brand);
+  transition: width 0.35s ease;
+}
+
+/* ---------------------------------------------------------------- 和纸胶带（装饰） */
+.washi {
+  position: absolute;
+  border-radius: 4rpx;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.washi-peach { background: #F4C99B; }
+.washi-sage { background: #B9D6B2; }
+.washi-rose { background: #F3D9E2; }
+.washi-sky { background: #C7D9EE; }
+
+/* ---------------------------------------------------------------- 分隔线 */
+.hr {
+  height: 2rpx;
+  background: var(--line);
+}
+
+/* ---------------------------------------------------------------- 弹层 */
+.mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 49, 42, 0.42);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx;
+}
+
+.dialog {
+  width: 100%;
+  background: var(--paper);
+  border-radius: 56rpx;
+  padding: 48rpx 40rpx 32rpx;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 注意：WXML 的 <text> 默认是行内元素，相邻两个 <text> 会挤在同一行。
+   弹窗里的标题/副标题必须各占一行，所以显式 display:block。 */
+.dialog-title {
+  display: block;
+  font-family: var(--f-title);
+  font-size: 40rpx;
+  color: var(--t1);
+  margin-bottom: 12rpx;
+}
+
+.dialog-sub {
+  display: block;
+  font-size: 24rpx;
+  color: var(--t2);
+  margin-bottom: 32rpx;
+}
+
+/* 盖章动画 */
+@keyframes stamp-in {
+  0% { transform: scale(2.1) rotate(-18deg); opacity: 0; }
+  55% { transform: scale(0.94) rotate(-8deg); opacity: 1; }
+  75% { transform: scale(1.06) rotate(-11deg); }
+  100% { transform: scale(1) rotate(-10deg); opacity: 1; }
+}
+
+.stamp-anim {
+  animation: stamp-in 0.5s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+}
+
+@keyframes rise {
+  from { transform: translateY(18rpx); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.rise {
+  animation: rise 0.28s ease both;
+}
+
+/* ============================================================================
+   通用 CSS 图标
+   不用图标字体、也不用内联 SVG —— 这两者在开发者工具 / 真机 / 各版本基础库上
+   渲染差异都比较大，纯 CSS 画的形状最可控。
+   ========================================================================== */
+
+/* 自定义导航栏右上角的圆形按钮（既是 view 也兼容原生 button 承载分享） */
+.nav-btn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border: 2rpx solid var(--glass-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+/* 原生 button 有两层默认外观：自身背景/边框 + ::after 伪边框，都要清掉 */
+button.nav-btn::after {
+  border: none;
+  display: none;
+}
+
+/* 分享：从盒子里向上飞出的箭头 */
+.ic-share {
+  position: relative;
+  width: 34rpx;
+  height: 38rpx;
+}
+
+.sh-rod {
+  position: absolute;
+  left: 50%;
+  top: 3rpx;
+  width: 3rpx;
+  height: 21rpx;
+  margin-left: -1.5rpx;
+  background: var(--ink);
+}
+
+/* 相邻两边加边框的方块旋转 45° 得到「∧」，顶点正好落在杆子顶端 */
+.sh-head {
+  position: absolute;
+  left: 50%;
+  top: 3rpx;
+  width: 14rpx;
+  height: 14rpx;
+  margin-left: -7rpx;
+  border-top: 3rpx solid var(--ink);
+  border-left: 3rpx solid var(--ink);
+  transform: rotate(45deg);
+}
+
+.sh-tray {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 34rpx;
+  height: 23rpx;
+  border: 3rpx solid var(--ink);
+  border-top: none;
+  border-radius: 0 0 9rpx 9rpx;
+}
+
+/* 列表项尾部的细箭头 */
+.ic-chev {
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 3rpx solid #C6C9C2;
+  border-right: 3rpx solid #C6C9C2;
+  transform: rotate(45deg);
+  margin-left: -4rpx;
+  flex: none;
+}
+
+.ic-chev.dark {
+  border-color: #6B5A34;
+}
+
+/* 未解锁徽章的锁 */
+.ic-lock {
+  position: relative;
+  width: 24rpx;
+  height: 26rpx;
+}
+
+.ic-lock::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 14rpx;
+  height: 13rpx;
+  margin-left: -7rpx;
+  border: 3rpx solid #C9C4B4;
+  border-bottom: none;
+  border-radius: 8rpx 8rpx 0 0;
+}
+
+.ic-lock::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 24rpx;
+  height: 16rpx;
+  border: 3rpx solid #C9C4B4;
+  border-radius: 5rpx;
+}
+
+.ic-lock.big {
+  transform: scale(1.25);
+}
+
+/* 时长表盘 */
+.ic-clock {
+  position: relative;
+  width: 26rpx;
+  height: 26rpx;
+  border: 3rpx solid #93A199;
+  border-radius: 50%;
+  flex: none;
+}
+
+.ic-clock::before {
+  content: '';
+  position: absolute;
+  left: 9rpx;
+  top: 4rpx;
+  width: 3rpx;
+  height: 8rpx;
+  border-radius: 2rpx;
+  background: #93A199;
+}
+
+.ic-clock::after {
+  content: '';
+  position: absolute;
+  left: 9rpx;
+  top: 11rpx;
+  width: 8rpx;
+  height: 3rpx;
+  border-radius: 2rpx;
+  background: #93A199;
+}
+
+/* 和纸胶带（装饰：压在卡片边上，不能给父级 overflow:hidden） */
+.tape {
+  position: absolute;
+  border-radius: 6rpx;
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+.tape-blue { background: #C7D9EE; }
+.tape-orange { background: #F4C99B; }

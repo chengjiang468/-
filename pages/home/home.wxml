@@ -1,0 +1,134 @@
+<view class="screen has-tab">
+
+  <!-- 第 13 轮：整屏背景（固定层，z-index:-1，画在内容下面）。
+       页面 WXSS 引不到本地图片，只能由 <image> 承载，八页共用这一个组件。 -->
+  <page-bg />
+
+
+  <!-- 搜索行。
+       第 12 轮：右上角「通知 + 头像」两个圆钮（.topbar）按用户要求移除；
+       顶部间距从顶栏挪到这里，数值取 navTotalRpx（状态栏 + 44px 导航区），
+       这样搜索框正好落在微信胶囊按钮下方，不顶到状态栏。 -->
+  <view class="search-row" style="margin-top:{{gap}}rpx">
+    <view class="sbox">
+      <view class="ic-search"></view>
+      <input class="sinput" value="{{query}}" bindinput="onQuery"
+             placeholder="搜索景点、路线、活动" placeholder-class="ph" confirm-type="search" />
+      <view class="sclear" wx:if="{{query}}" bindtap="onClearQuery">×</view>
+    </view>
+  </view>
+
+  <!-- 线路筛选 -->
+  <view class="rf-row">
+    <view class="pill {{routeKey === item.key ? 'on' : ''}}" wx:for="{{routes}}" wx:key="key"
+          data-key="{{item.key}}" bindtap="onRoute">{{item.name}}</view>
+  </view>
+
+  <!-- 搜索结果 -->
+  <block wx:if="{{query}}">
+    <view class="sec-head">
+      <text class="sec-title">搜索“{{query}}”</text>
+      <text class="sec-more">{{results.length}} 个结果</text>
+    </view>
+    <view class="slist" wx:if="{{results.length}}">
+      <view class="srow" wx:for="{{results}}" wx:key="id" data-id="{{item.id}}" bindtap="onSpot" hover-class="btn-hover">
+        <view class="simg">
+          <image class="simg-i" src="{{item.icon}}" mode="aspectFit" />
+        </view>
+        <view class="scol">
+          <text class="srow-nm">{{item.name}}</text>
+          <view class="srow-mt">
+            <view class="dot" style="background:{{item.color}}"></view>
+            <text class="srow-ct">{{item.cat}}</text>
+          </view>
+        </view>
+        <text class="srow-ar">›</text>
+      </view>
+    </view>
+    <view class="empty" wx:else>
+      <text class="empty-t">没找到「{{query}}」</text>
+      <text class="empty-s">试试搜“草坪”“农场”“咖啡”</text>
+    </view>
+  </block>
+
+  <!-- 正常内容 -->
+  <block wx:else>
+    <view class="sec-head">
+      <text class="sec-title">热门打卡点</text>
+    </view>
+
+    <!-- 线路推荐卡（设计稿：整张卡即「热门打卡点」内容）。
+         整张卡可点 —— 直接切到地图页看这条线的导览图。 -->
+    <view class="rcard card" bindtap="onGoMap" hover-class="btn-hover">
+      <view class="washi washi-rose rtape"></view>
+      <view class="rcover-wrap">
+        <image class="rcover" src="{{route.cover}}" mode="aspectFill" />
+        <view class="rrate">
+          <text class="rrate-s">★</text>
+          <text class="rrate-n num">4.9</text>
+        </view>
+        <view class="rfav"><view class="ic-heart"></view></view>
+        <view class="rtag chip" style="background:{{route.accentDeep}}">{{route.name}} · 推荐</view>
+      </view>
+      <view class="rbody">
+        <text class="rname">蝴蝶谷 · {{route.name}}</text>
+        <view class="rmeta">
+          <view class="ic-clock"></view>
+          <text class="rmeta-t">{{route.hours}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 智能选路 -->
+    <view class="smart card-mint" bindtap="onSmartPick" hover-class="btn-hover">
+      <view class="sm-ic"><view class="ic-pen"></view></view>
+      <view class="sm-col">
+        <text class="sm-t">不知道今天走哪儿？</text>
+        <text class="sm-d">让园区帮你随机选一条</text>
+      </view>
+      <view class="sm-go"><view class="chev-w"></view></view>
+    </view>
+
+    <!-- 今日活动 -->
+    <view class="sec-head">
+      <text class="sec-title">今日活动</text>
+      <text class="sec-more link" bindtap="onActivities">查看全部 ›</text>
+    </view>
+    <!-- 第 13 轮：整块内容套一层半透磨砂框（与开屏欢迎卡同配方），
+         背景图铺满之后，这排活动卡才有「浮在玻璃上」的层次。 -->
+    <view class="ac-panel">
+      <scroll-view class="awrap" scroll-x enable-flex show-scrollbar="{{false}}">
+        <view class="arow">
+          <view class="ac" wx:for="{{acts}}" wx:key="title"
+                data-idx="{{item.idx}}" bindtap="onAct" hover-class="btn-hover">
+            <view class="ac-cov">
+              <image class="ac-img" src="{{item.cover}}" mode="aspectFill" />
+              <view class="ac-day"><text class="num">{{item.day}}</text></view>
+              <view class="ac-bk" wx:if="{{item.booked}}">已约</view>
+            </view>
+            <text class="ac-t">{{item.title}}</text>
+            <text class="ac-m">{{item.time}} · {{item.place}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </block>
+
+</view>
+
+<!-- 「让园区帮你选一条」：先弹卡看线路名 + 几句有趣的话，确认了再跳地图 -->
+<view class="mask" wx:if="{{showPick}}" bindtap="onClosePick">
+  <view class="dialog rise" catchtap="noop">
+    <text class="pk-k">今天就走这条</text>
+    <view class="pk-badge" style="background:{{pick.tint}}">
+      <image class="pk-img" src="{{pick.icon}}" mode="aspectFit" />
+    </view>
+    <text class="pk-n title-font" style="color:{{pick.accentDeep}}">{{pick.name}}</text>
+    <text class="pk-tag">{{pick.tag}} · {{pick.hours}} · {{pick.distance}}</text>
+    <view class="pk-fun">
+      <text class="pk-f" wx:for="{{pick.fun}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="btn btn-primary pk-btn" bindtap="onConfirmPick">就走这条线</view>
+    <view class="pk-again" bindtap="onPickAgain">换一条试试</view>
+  </view>
+</view>

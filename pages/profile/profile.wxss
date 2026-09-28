@@ -1,0 +1,308 @@
+/* ============================================================================
+   我的 —— 按设计稿《06-我的》逐屏还原
+   设计稿 750×1624px，此屏 1px = 1rpx。括号里的数字即设计稿实测坐标。
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ 资料卡 */
+.pcard {
+  margin: 36rpx 40rpx 0;           /* 设计稿 (40,264,670,332) */
+  padding: 32rpx 32rpx 34rpx;
+}
+
+.pc-head {
+  display: flex;
+  align-items: center;
+  height: 120rpx;                  /* 头像直径＝这一行的高度 */
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #BFD8B8 0%, #F0D7B8 100%);
+  flex: none;
+}
+
+.pc-col {
+  flex: 1;
+  min-width: 0;
+  margin-left: 26rpx;
+}
+
+.pc-nick {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--t1);
+}
+
+.pc-id {
+  display: block;
+  font-size: 24rpx;
+  color: var(--t3);
+  margin-top: 10rpx;
+}
+
+.pc-edit {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.ic-pencil {
+  position: relative;
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.ic-pencil::before {
+  content: '';
+  position: absolute;
+  left: 12rpx;
+  top: 1rpx;
+  width: 7rpx;
+  height: 22rpx;
+  border-radius: 3rpx;
+  background: #8A7A5E;
+  transform: rotate(45deg);
+}
+
+.ic-pencil::after {
+  content: '';
+  position: absolute;
+  left: 1rpx;
+  bottom: 1rpx;
+  width: 0;
+  height: 0;
+  border-left: 4rpx solid transparent;
+  border-right: 4rpx solid transparent;
+  border-top: 7rpx solid #8A7A5E;
+  transform: rotate(45deg);
+}
+
+/* 设计稿：3 枚 186×124 圆角方块，间距 20 */
+.stats {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.st {
+  flex: 1;
+  height: 124rpx;
+  border-radius: 28rpx;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.st.mint {
+  background: var(--mint);
+}
+
+.st-n {
+  font-size: 40rpx;
+  line-height: 1;
+}
+
+.st-l {
+  font-size: 22rpx;
+  color: var(--t2);
+  margin-top: 10rpx;
+  line-height: 1;
+}
+
+.c-brand { color: var(--brand-deep); }
+.c-green { color: var(--green); }
+.c-gold { color: #B08A2E; }
+
+/* ------------------------------------------------------------------ 功能列表 */
+.flist {
+  margin: 33rpx 40rpx 0;           /* 设计稿 (40,628,670,380) */
+  padding: 16rpx 28rpx;
+}
+
+.fr {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+}
+
+.fr-ic {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 22rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.fr-ic.cream { background: var(--cream); }
+.fr-ic.mint { background: var(--mint); }
+
+.fr-n {
+  flex: 1;
+  min-width: 0;
+  margin-left: 24rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--t1);
+}
+
+.fr-v {
+  font-size: 24rpx;
+  color: var(--t3);
+  flex: none;
+}
+
+.fr .ic-chev {
+  margin-left: 20rpx;
+}
+
+/* 图标：奖章 / 日历 / 路线 */
+.ic-award {
+  position: relative;
+  width: 26rpx;
+  height: 32rpx;
+}
+
+.ic-award::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 20rpx;
+  height: 20rpx;
+  margin-left: -10rpx;
+  border: 3rpx solid #B99A55;
+  border-radius: 50%;
+}
+
+.ic-award::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  margin-left: -8rpx;
+  border-left: 8rpx solid transparent;
+  border-right: 8rpx solid transparent;
+  border-top: 13rpx solid #B99A55;
+}
+
+.ic-cal {
+  position: relative;
+  width: 28rpx;
+  height: 26rpx;
+  border: 3rpx solid #6E9C6B;
+  border-radius: 6rpx;
+}
+
+.ic-cal::before {
+  content: '';
+  position: absolute;
+  left: -3rpx;
+  top: -3rpx;
+  width: 28rpx;
+  height: 7rpx;
+  background: #6E9C6B;
+  border-radius: 4rpx 4rpx 0 0;
+}
+
+.ic-cal::after {
+  content: '';
+  position: absolute;
+  left: 6rpx;
+  top: 11rpx;
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+  background: #6E9C6B;
+}
+
+/* ------------------------------------------------------------------ 建议信箱 */
+/* 设计稿 (40,1024,670,176)，右上角压一块橙胶带。
+   第 13 轮追加：整块改成半透磨砂，与 app.wxss 的 .card-sand 同一套值
+   （保留沙色相、只做半透）。原先的实心 var(--sand) + 透明描边是「压在纸底上」时代的写法，
+   底换成背景图之后它就是全站唯一一块不透明的板。 */
+.sand {
+  position: relative;
+  margin: 17rpx 40rpx 0;
+  padding: 0 32rpx;
+  height: 172rpx;
+  background: var(--glass-sand);
+  -webkit-backdrop-filter: blur(20rpx);
+  backdrop-filter: blur(20rpx);
+  border-color: var(--glass-line);
+  display: flex;
+  align-items: center;
+}
+
+.sd-tape {
+  right: 40rpx;
+  top: 4rpx;
+  width: 170rpx;
+  height: 48rpx;
+  transform: rotate(-5deg);
+}
+
+.sd-ic {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 28rpx;
+  background: #FBF3E2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.ic-mail {
+  position: relative;
+  width: 32rpx;
+  height: 24rpx;
+  border: 3rpx solid #B8944E;
+  border-radius: 5rpx;
+}
+
+.ic-mail::before {
+  content: '';
+  position: absolute;
+  left: 3rpx;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-left: 10rpx solid transparent;
+  border-right: 10rpx solid transparent;
+  border-top: 8rpx solid #B8944E;
+}
+
+.sd-t {
+  flex: 1;
+  min-width: 0;
+  margin-left: 24rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #7A5A18;
+}
+
+/* ------------------------------------------------------------------ 底部 */
+.ver {
+  display: block;
+  margin: 38rpx 40rpx 0;
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--t3);
+}
+
+/* 第 11 轮：原来这里是「徽章收集」卡片（.bcard 与 .bc- 系列、以及 .bg / .bi）的样式，
+   整块已随 wxml 一起移除。徽章格样式在 journey.wxss 里仍保留。 */

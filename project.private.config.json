@@ -1,0 +1,23 @@
+{
+  "libVersion": "3.17.3",
+  "projectname": "蝴蝶谷导览小程序",
+  "condition": {},
+  "setting": {
+    "urlCheck": false,
+    "coverView": false,
+    "lazyloadPlaceholderEnable": false,
+    "skylineRenderEnable": false,
+    "preloadBackgroundData": false,
+    "autoAudits": false,
+    "useApiHook": true,
+    "showShadowRootInWxmlPanel": true,
+    "useStaticServer": false,
+    "useLanDebug": false,
+    "showES6CompileOption": false,
+    "compileHotReLoad": true,
+    "useGlassEaselForWxml": false,
+    "checkInvalidKey": true,
+    "ignoreDevUnusedFiles": false,
+    "bigPackageSizeSupport": true
+  }
+}

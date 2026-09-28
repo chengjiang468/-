@@ -1,0 +1,15 @@
+<view class="nav" style="padding-top:{{top}}rpx; background:{{bg}}">
+  <view class="nav-bar" style="height:{{barH}}rpx">
+    <view class="nav-side {{align === 'left' ? 'zero' : ''}}" bindtap="onBack" hover-class="btn-hover">
+      <view class="nav-circle {{align === 'left' ? 'ghost' : ''}}" wx:if="{{back}}">
+        <view class="chev"></view>
+      </view>
+    </view>
+    <text class="nav-title {{align === 'left' ? 'left' : ''}}">{{title}}</text>
+    <view class="nav-side nav-right">
+      <slot name="right"></slot>
+    </view>
+  </view>
+  <view class="nav-line" wx:if="{{bordered}}"></view>
+</view>
+<view class="nav-ph" style="height:{{total}}rpx"></view>
